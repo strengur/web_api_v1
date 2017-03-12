@@ -1,0 +1,24 @@
+// Medis queries mixins
+@mixin mobile-landscape-nrw {
+  @media screen and (min-width: $brk-mobile-landscape-nrw) {
+    @content;
+  }
+}
+
+@mixin mobile-landscape {
+  @media screen and (min-width: $brk-mobile-landscape) {
+    @content;
+  }
+}
+
+@mixin tablets {
+  @media screen and (min-width: $brk-tablets) {
+    @content;
+  }
+}
+
+@mixin displays {
+  @media screen and (min-width: $brk-displays){
+    @content;
+  }
+}

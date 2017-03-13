@@ -8,7 +8,7 @@
   transition: 0.3s; }
 
 .items-listing-container {
-  max-width: 1024px;
+  max-width: 768px;
   margin: auto; }
 
 .inline-flex-container {
@@ -47,5 +47,8 @@
 
 .items-listing a {
   display: block; }
+
+.items-listing img {
+  max-width: 200px; }
 
 /*# sourceMappingURL=style.css.map */

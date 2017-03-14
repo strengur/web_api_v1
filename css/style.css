@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box; }
 
+body {
+  background: #d5ddde; }
+
 .transition-in-05:hover {
   transition: 0.5s; }
 
@@ -19,14 +22,20 @@
   flex: 1; }
 
 .api-selections-list li {
-  background: lightblue;
-  border: 1px solid blue;
+  background: #6b8e4e;
+  border-radius: 0px 25px;
   padding: 12px;
-  /* cursor: pointer; */ }
+  cursor: pointer;
+  color: #d5ddde;
+  margin: 4px 2px; }
 
 .api-selections-list li:hover {
   cursor: pointer;
   background: rgba(0, 0, 0, 0.1); }
+
+#listings-name {
+  text-align: center;
+  color: #1b2726; }
 
 .api-selections-list,
 .items-listing ul {
@@ -43,12 +52,14 @@
   flex-wrap: wrap; }
 
 .items-listing li {
-  margin: 7px; }
+  margin: 7px;
+  color: #1b2726; }
 
 .items-listing a {
   display: block; }
 
 .items-listing img {
-  max-width: 200px; }
+  max-width: 200px;
+  box-shadow: 2px 2px 4px #777; }
 
 /*# sourceMappingURL=style.css.map */

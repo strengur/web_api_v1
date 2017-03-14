@@ -21,15 +21,22 @@
 }
 
 .api-selections-list li {
-  background: lightblue;
-  border: 1px solid blue;
+  background: #6b8e4e;
+  border-radius: 0px 25px;
   padding: 12px;
-    /* cursor: pointer; */
+  cursor: pointer;
+  color: #d5ddde;
+  margin: 4px 2px;
 }
 
 .api-selections-list li:hover {
   cursor: pointer;
   background: rgba(0,0,0,0.1);
+}
+
+#listings-name {
+  text-align: center;
+  color: #1b2726;
 }
 
 .api-selections-list,
@@ -51,6 +58,7 @@
 
 .items-listing li {
   margin: 7px;
+  color: #1b2726;
 }
 
 .items-listing a {
@@ -59,4 +67,5 @@
 
 .items-listing img {
   max-width: 200px;
+  box-shadow: 2px 2px 4px #777;
 }

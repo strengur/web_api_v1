@@ -10,6 +10,9 @@ body {
 .transition-out-03 {
   transition: 0.3s; }
 
+.hidden {
+  display: none; }
+
 .items-listing-container {
   max-width: 768px;
   margin: auto; }
@@ -23,7 +26,7 @@ body {
 
 .api-selections-list li {
   background: #6b8e4e;
-  border-radius: 0px 25px;
+  border-radius: 5px;
   padding: 12px;
   cursor: pointer;
   color: #d5ddde;
@@ -48,6 +51,9 @@ body {
 .items-listing ul li {
   text-align: center; }
 
+.items-listing-heading {
+  padding: 60px 0px; }
+
 .items-listing ul {
   flex-wrap: wrap; }
 
@@ -61,5 +67,16 @@ body {
 .items-listing img {
   max-width: 200px;
   box-shadow: 2px 2px 4px #777; }
+
+.show-more {
+  padding: 50px 0px;
+  text-align: center; }
+
+#show-more-button {
+  border-radius: 3px;
+  border: 1px solid #3c5148;
+  background: #6b8e4e;
+  color: #d5ddde;
+  padding: 10px 15px; }
 
 /*# sourceMappingURL=style.css.map */

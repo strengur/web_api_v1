@@ -35,6 +35,9 @@ spotifyButton.addEventListener('click', function() {
   spotify(6);
   var listingsName = this.innerText;
   $('#listings-name').html(listingsName);
+  if(showMoreButton.style.display === "none") {
+    showMoreButton.style.display = "inline-block";
+  }
 });
 
 $('#show-more-button').click(function() {

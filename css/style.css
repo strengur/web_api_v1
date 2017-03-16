@@ -68,6 +68,9 @@ body {
   max-width: 200px;
   box-shadow: 2px 2px 4px #777; }
 
+div#items-listing > div {
+  text-align: center; }
+
 .show-more {
   padding: 50px 0px;
   text-align: center; }

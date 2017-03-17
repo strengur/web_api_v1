@@ -1,5 +1,6 @@
 #api-options {
-
+  position: fixed;
+  width: 100%
 }
 
 .items-listing-container {
@@ -31,7 +32,7 @@
 
 .api-selections-list li:hover {
   cursor: pointer;
-  background: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.7);
 }
 
 #listings-name {

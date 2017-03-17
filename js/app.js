@@ -1,7 +1,22 @@
-// Points for API's selections navigation
-  // Add selected class to selected API
 var spotifyButton = document.getElementById('spotify-button');
 var showMoreButton = document.getElementById('show-more-button');
+
+// Overlay file called
+function overLay () {
+  var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+  if(xhr.readyState === 4) {
+    if(xhr.status === 200) {
+      $('.lightbox').html(xhr.responseText);
+    }
+  }
+};
+xhr.open('GET', 'overlay.html');
+xhr.send();
+
+}
+
+
 // Spotify feed
 function spotify(e) {
   var limit = e;
@@ -51,14 +66,31 @@ $('#show-more-button').click(function() {
   [
     {
       t : "shooter",
+      tomatoes : "true"
+    },
+    {
+      t : "Bad Boys",
+      tomatoes : "true"
+    },
+    {
+      t : "the bourne identity",
       tomatoes: "true"
     },
     {
-      t : "Bad Boys"
-    }
+      t : "date night",
+      tomatoes: "true"
+    },
+    {
+      t : "grumpy old men",
+      tomatoes: "true"
+    },
+    {
+      t : "there's something about mary",
+      tomatoes: "true"
+    },
   ]
   function omdbPosters(data) {
     console.log(data);
 
   }
-  $.getJSON(omdbAPI, omdbOptions[1], omdbPosters);
+  $.getJSON(omdbAPI, omdbOptions[5], omdbPosters);

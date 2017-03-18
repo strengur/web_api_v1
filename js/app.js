@@ -21,7 +21,6 @@ xhr.onreadystatechange = function() {
 
       $('#the-image').html(playlistCover);
       $('#preview-txt').html(playlistInfo());
-      console.log(playlistInfo());
 
       $('#preview-prev').click(function() {
         itemIndexNumber --;
@@ -43,6 +42,11 @@ xhr.onreadystatechange = function() {
         playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
         $('#the-image').html(playlistCover);
         $('#preview-txt').html(playlistInfo());
+      });
+      
+      $('#close-icon').click(function() {
+        console.log('kkkkk');
+        $('.overlay').remove();
       });
     }
   }

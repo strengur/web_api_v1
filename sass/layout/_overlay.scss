@@ -6,6 +6,18 @@
   background: rgba(0,0,0,0.9)
 }
 
+#close-icon {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  cursor: pointer;
+}
+
+#close-icon img {
+  border: none;
+  width: 30px;
+}
+
 .preview {
   text-align: center;
 }

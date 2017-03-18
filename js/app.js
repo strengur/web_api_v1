@@ -10,18 +10,29 @@ xhr.onreadystatechange = function() {
       // Example 2 for project's hand in notes
       $('.lightbox').html(xhr.responseText);
       var playlistCover = '<img src="' + itemImage + '" alt="' + itemName + '">';
+      function playlistInfo() {
+        var playlistInformation = '<table><tbody>';
+        playlistInformation += '<tr><td>Playlist:</td><td>' + items[itemIndexNumber].name + '</td></tr>';
+        playlistInformation += '<tr><td>Tracks:</td><td>' + items[itemIndexNumber].tracks.total + '</td></tr>';
+        playlistInformation += '<tr><td colspan="2" class="open"><a href="' + items[itemIndexNumber].external_urls.spotify + '">Open in Spotify</a></td></tr>';
+        playlistInformation += '</tbody></table>';
+        return playlistInformation;
+      }
+
       $('#the-image').html(playlistCover);
+      $('#preview-txt').html(playlistInfo());
+      console.log(playlistInfo());
 
       $('#preview-prev').click(function() {
         itemIndexNumber --;
-        if(itemIndexNumber = 0) {
-          itemIndexNumber = items.length;
+        if(itemIndexNumber === -1 ) {
+          itemIndexNumber = items.length - 1;
+          playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
+        } else {
+          playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
         };
-        console.log('Fjöldi: ' + items.length + ' og: ' + itemIndexNumber);
-
-        playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
         $('#the-image').html(playlistCover);
-        console.log(items[itemIndexNumber]);
+        $('#preview-txt').html(playlistInfo());
       });
 
       $('#preview-next').click(function() {
@@ -31,7 +42,7 @@ xhr.onreadystatechange = function() {
         };
         playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
         $('#the-image').html(playlistCover);
-        console.log(itemIndexNumber);
+        $('#preview-txt').html(playlistInfo());
       });
     }
   }

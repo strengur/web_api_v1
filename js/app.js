@@ -2,12 +2,23 @@ var spotifyButton = document.getElementById('spotify-button');
 var showMoreButton = document.getElementById('show-more-button');
 
 // Overlay file called
-function overLay () {
+function overlay (items, itemIndexNumber, itemImage, itemName) {
   var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function() {
   if(xhr.readyState === 4) {
     if(xhr.status === 200) {
+      // Example 2 for project's hand in notes
       $('.lightbox').html(xhr.responseText);
+      var playlistCover = '<img src="' + itemImage + '" alt="' + itemName + '">';
+      $('#the-image').html(playlistCover);
+
+      $('#preview-prev').click(function() {
+        console.log(itemIndexNumber --);
+      });
+
+      $('#preview-next').click(function() {
+        console.log(itemIndexNumber ++);
+      });
     }
   }
 };
@@ -42,6 +53,19 @@ function spotify(e) {
     // playlistHTML += '</div>';
     $('#items-listing').html(playlistHTML);
     $('.show-more').removeClass('hidden');
+
+// Example 1 for project's hand in notes
+    $('.inline-flex-item a').click(function(e) {
+      e.preventDefault();
+      var items = data.playlists.items;
+      var itemIndexNumber = $(this).index('.inline-flex-item a');
+      var item = data.playlists.items[itemIndexNumber];
+      var itemImage = item.images[0].url;
+      var itemName = item.name;
+      overlay(items, itemIndexNumber, itemImage, itemName);
+      console.log('Lengdin: ', data.playlists.items);
+
+    });
   }
   $.getJSON(spotifyAPI, spotifyOptions, displayPlaylists);
 }
@@ -59,6 +83,8 @@ $('#show-more-button').click(function() {
   spotify(12);
   $(this).fadeOut();
 });
+
+
 
 // OMDB feed
   var omdbAPI = "http://www.omdbapi.com/?"

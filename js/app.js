@@ -13,11 +13,25 @@ xhr.onreadystatechange = function() {
       $('#the-image').html(playlistCover);
 
       $('#preview-prev').click(function() {
-        console.log(itemIndexNumber --);
+        itemIndexNumber --;
+        if(itemIndexNumber = 0) {
+          itemIndexNumber = items.length;
+        };
+        console.log('Fjöldi: ' + items.length + ' og: ' + itemIndexNumber);
+
+        playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
+        $('#the-image').html(playlistCover);
+        console.log(items[itemIndexNumber]);
       });
 
       $('#preview-next').click(function() {
-        console.log(itemIndexNumber ++);
+        itemIndexNumber ++;
+        if(itemIndexNumber === items.length) {
+          itemIndexNumber = 0;
+        };
+        playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
+        $('#the-image').html(playlistCover);
+        console.log(itemIndexNumber);
       });
     }
   }

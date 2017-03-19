@@ -4,8 +4,8 @@ var omdbButton = document.getElementById('omdb-button');
 
 // usrSelection.selectedOptions[0].value
 
-// Spotify Overlay file called
-function SpotifyOverlay (items, itemIndexNumber, itemImage, itemName) {
+// Spotify Lightbox file called
+function SpotifyLightbox (items, itemIndexNumber, itemImage, itemName) {
   var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function() {
   if(xhr.readyState === 4) {
@@ -53,12 +53,12 @@ xhr.onreadystatechange = function() {
     }
   }
 };
-xhr.open('GET', 'overlay.html');
+xhr.open('GET', 'lightbox.html');
 xhr.send();
 }
 
-// OMDB Overlay file called
-function omdbOverlay (items, itemIndexNumber, itemImage, itemName) {
+// OMDB Lightbox file called
+function omdbLightbox (items, itemIndexNumber, itemImage, itemName) {
   var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function() {
   if(xhr.readyState === 4) {
@@ -124,7 +124,7 @@ xhr.onreadystatechange = function() {
     }
   }
 };
-xhr.open('GET', 'overlay.html');
+xhr.open('GET', 'lightbox.html');
 xhr.send();
 }
 
@@ -192,9 +192,9 @@ function spotify(e, f) {
       var item = data.playlists.items[itemIndexNumber];
       var itemImage = item.images[0].url;
       var itemName = item.name;
-      SpotifyOverlay(items, itemIndexNumber, itemImage, itemName);
+      SpotifyLightbox(items, itemIndexNumber, itemImage, itemName);
     });
-    
+
     var usrSelection = document.getElementById('select-sorting');
     usrSelection.addEventListener('change', function() {
       var listSorting = usrSelection.selectedOptions[0].value;
@@ -270,7 +270,7 @@ function omdb(f) {
       var item = data.Search[itemIndexNumber];
       var itemImage = item.Poster;
       var itemName = item.Title;
-      omdbOverlay(items, itemIndexNumber, itemImage, itemName);
+      omdbLightbox(items, itemIndexNumber, itemImage, itemName);
     });
 
     var usrSelection = document.getElementById('select-sorting');

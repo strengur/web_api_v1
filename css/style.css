@@ -26,7 +26,7 @@ body {
   justify-content: space-around; }
 
 .inline-flex-item {
-  flex: 1; }
+  flex: 1 170px; }
 
 .api-selections-list li {
   background: #6b8e4e;

@@ -2,6 +2,8 @@ var spotifyButton = document.getElementById('spotify-button');
 var showMoreButton = document.getElementById('show-more-button');
 var omdbButton = document.getElementById('omdb-button');
 
+// usrSelection.selectedOptions[0].value
+
 // Spotify Overlay file called
 function SpotifyOverlay (items, itemIndexNumber, itemImage, itemName) {
   var xhr = new XMLHttpRequest();
@@ -30,7 +32,7 @@ xhr.onreadystatechange = function() {
           playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
         } else {
           playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
-        };
+        }
         $('#the-image').html(playlistCover);
         $('#preview-txt').html(playlistInfo());
       });
@@ -39,7 +41,7 @@ xhr.onreadystatechange = function() {
         itemIndexNumber ++;
         if(itemIndexNumber === items.length) {
           itemIndexNumber = 0;
-        };
+        }
         playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
         $('#the-image').html(playlistCover);
         $('#preview-txt').html(playlistInfo());
@@ -62,18 +64,19 @@ xhr.onreadystatechange = function() {
   if(xhr.readyState === 4) {
     if(xhr.status === 200) {
       // Example 2 for project's hand in notes
-      console.log(itemImage.valueOf());
+      var moviePoster;
       $('.lightbox').html(xhr.responseText);
       if(itemImage !== "N/A") {
-        var moviePoster = '<img src="' + itemImage + '" alt="' + itemName + '">';
+        moviePoster = '<img src="' + itemImage + '" alt="' + itemName + '">';
       } else {
-        var moviePoster= '<img src="assets/images/no-poster.jpg" alt="">';
+        moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
       }
       function movieInfo() {
         var movieInformation = '<table><tbody>';
         movieInformation += '<tr><td>Movie Name:</td><td>' + items[itemIndexNumber].Title + '</td></tr>';
         movieInformation += '<tr><td>Year:</td><td>' + items[itemIndexNumber].Year + '</td></tr>';
         movieInformation += '<tr><td>Type:</td><td>' + items[itemIndexNumber].Type + '</td></tr>';
+        movieInformation += '<tr><td>IMDB ID:</td><td>' + items[itemIndexNumber].imdbID + '</td></tr>';
         movieInformation += '</tbody></table>';
         return movieInformation;
       }
@@ -85,7 +88,6 @@ xhr.onreadystatechange = function() {
         itemIndexNumber --;
         if(itemIndexNumber === -1 ) {
           itemIndexNumber = items.length - 1;
-          //moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
           if(items[itemIndexNumber].Poster !== "N/A") {
             moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
           } else {
@@ -97,8 +99,7 @@ xhr.onreadystatechange = function() {
           } else {
             moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
           }
-          //moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
-        };
+        }
         $('#the-image').html(moviePoster);
         $('#preview-txt').html(movieInfo());
       });
@@ -107,7 +108,7 @@ xhr.onreadystatechange = function() {
         itemIndexNumber ++;
         if(itemIndexNumber === items.length) {
           itemIndexNumber = 0;
-        };
+        }
         if(items[itemIndexNumber].Poster !== "N/A") {
           moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
         } else {
@@ -128,8 +129,9 @@ xhr.send();
 }
 
 // Spotify feed
-function spotify(e) {
+function spotify(e, f) {
   var limit = e;
+  var sortingOrder = f;
   var spotifyAPI = "https://api.spotify.com/v1/search?";
   var spotifyOptions =
   {
@@ -138,8 +140,40 @@ function spotify(e) {
     limit : limit
   };
   function displayPlaylists(data) {
-    var playlistHTML = '<ul class="inline-flex-container">';
-    console.log(data.playlists.items.length);
+    var sortingItems = data.playlists.items;
+    if(sortingOrder === "asc") {
+      sortingItems.sort(function(a, b) {
+        var compare1 = a.name.toLowerCase();
+        var compare2 = b.name.toLowerCase();
+        if (compare1 < compare2) {
+          return -1;
+        }
+        if (compare1 > compare2) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      sortingItems.sort(function(a, b) {
+        var compare1 = a.name.toLowerCase();
+        var compare2 = b.name.toLowerCase();
+        if (compare1 < compare2) {
+          return 1;
+        }
+        if (compare1 > compare2) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+
+    var playlistHTML = '<select id="select-sorting">';
+    playlistHTML += '<option>- Select Sorting -</option>';
+    playlistHTML += '<option value="asc">Ascending</option>';
+    playlistHTML += '<option value="desc">Descending</option>';
+    playlistHTML += '</select>';
+
+    playlistHTML += '<ul class="inline-flex-container">';
     $.each(data.playlists.items, function (i, playlists) {
       playlistHTML += '<li class="inline-flex-item"><p>' + playlists.name + '</p>';
       playlistHTML += '<a href="' + data.playlists.items[i].external_urls.spotify + '">';
@@ -147,9 +181,6 @@ function spotify(e) {
       playlistHTML += '</a></li>';
     });
     playlistHTML += '</ul>';
-    // playlistHTML += '<div class="show-more">';
-    // playlistHTML += '<div id="show-more-button">Show More</div>';
-    // playlistHTML += '</div>';
     $('#items-listing').html(playlistHTML);
     $('.show-more').removeClass('hidden');
 
@@ -162,29 +193,66 @@ function spotify(e) {
       var itemImage = item.images[0].url;
       var itemName = item.name;
       SpotifyOverlay(items, itemIndexNumber, itemImage, itemName);
-      console.log('Lengdin: ', data.playlists.items);
-
+    });
+    
+    var usrSelection = document.getElementById('select-sorting');
+    usrSelection.addEventListener('change', function() {
+      var listSorting = usrSelection.selectedOptions[0].value;
+      spotify(data.playlists.items.length, listSorting);
+      console.log("DDD: ", listSorting);
     });
   }
   $.getJSON(spotifyAPI, spotifyOptions, displayPlaylists);
 }
 
 // OMDB feed
-function omdb() {
-  var omdbAPI = "http://www.omdbapi.com/?"
+function omdb(f) {
+  console.log("ssss: ", f);
+  var sortingOrder = f;
+  var omdbAPI = "http://www.omdbapi.com/?";
   var omdbOptions =
   {
     s : "Police Academy",
     tomatoes : "true"
-  }
-  function omdbPosters(data) {
-    console.log(data);
+  };
 
-    var posterHTML = '<ul class="inline-flex-container">';
-    console.log(data.Search[0]);
+  function omdbPosters(data) {
+    var sortingItems = data.Search;
+    if(sortingOrder === "asc") {
+      sortingItems.sort(function(a, b) {
+        var compare1 = a.Year.toLowerCase();
+        var compare2 = b.Year.toLowerCase();
+        if (compare1 < compare2) {
+          return -1;
+        }
+        if (compare1 > compare2) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      sortingItems.sort(function(a, b) {
+        var compare1 = a.Year.toLowerCase();
+        var compare2 = b.Year.toLowerCase();
+        if (compare1 < compare2) {
+          return 1;
+        }
+        if (compare1 > compare2) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+
+    var posterHTML = '<select id="select-sorting">';
+    posterHTML += '<option>- Select Sorting -</option>';
+    posterHTML += '<option value="asc">Ascending</option>';
+    posterHTML += '<option value="desc">Descending</option>';
+    posterHTML += '</select>';
+
+    posterHTML += '<ul class="inline-flex-container">';
     $.each(data.Search, function (i, movieList) {
       posterHTML += '<li class="inline-flex-item"><p>' + movieList.Title + '</p>';
-      //posterHTML += '<img src="' + data.Search[i].Poster + '" alt="' + movieList.Title + '">';
       if(movieList.Poster !== "N/A") {
         posterHTML += '<img src="' + data.Search[i].Poster + '" alt="' + movieList.Title + '">';
       } else {
@@ -193,11 +261,7 @@ function omdb() {
       posterHTML += '</li>';
     });
     posterHTML += '</ul>';
-    // playlistHTML += '<div class="show-more">';
-    // playlistHTML += '<div id="show-more-button">Show More</div>';
-    // playlistHTML += '</div>';
     $('#items-listing').html(posterHTML);
-    //$('.show-more').removeClass('hidden');
 
 // Example 1 for project's hand in notes
     $('.inline-flex-item img').click(function(e) {
@@ -209,12 +273,24 @@ function omdb() {
       omdbOverlay(items, itemIndexNumber, itemImage, itemName);
     });
 
+    var usrSelection = document.getElementById('select-sorting');
+    usrSelection.addEventListener('change', function() {
+      var listSorting = usrSelection.selectedOptions[0].value;
+      omdb(listSorting);
+      console.log("DDD: ", listSorting);
+    });
   }
   $.getJSON(omdbAPI, omdbOptions, omdbPosters);
 }
 
+function sortingStatus() {
+  var listSorting = "asc";
+  return listSorting;
+}
+
 spotifyButton.addEventListener('click', function() {
-  spotify(6);
+
+  spotify(6, sortingStatus());
   var listingsName = this.innerText;
   $('#listings-name').html(listingsName);
   if(showMoreButton.style.display === "none") {
@@ -223,12 +299,12 @@ spotifyButton.addEventListener('click', function() {
 });
 
 $('#show-more-button').click(function() {
-  spotify(12);
+  spotify(12, sortingStatus());
   $(this).fadeOut();
 });
 
 omdbButton.addEventListener('click', function() {
-  omdb();
+  omdb(sortingStatus());
   var listingsName = this.innerText;
   $('#listings-name').html(listingsName);
 });

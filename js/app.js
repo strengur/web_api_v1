@@ -142,30 +142,21 @@ function spotify(e, f) {
   function displayPlaylists(data) {
     var sortingItems = data.playlists.items;
     if(sortingOrder === "asc") {
-      sortingItems.sort(function(a, b) {
-        var compare1 = a.name.toLowerCase();
-        var compare2 = b.name.toLowerCase();
-        if (compare1 < compare2) {
-          return -1;
-        }
-        if (compare1 > compare2) {
-          return 1;
-        }
-        return 0;
-      });
+      var x = 1;
     } else {
-      sortingItems.sort(function(a, b) {
-        var compare1 = a.name.toLowerCase();
-        var compare2 = b.name.toLowerCase();
-        if (compare1 < compare2) {
-          return 1;
-        }
-        if (compare1 > compare2) {
-          return -1;
-        }
-        return 0;
-      });
+      var x = -1;
     }
+    sortingItems.sort(function(a, b) {
+       var compare1 = a.name.toLowerCase();
+       var compare2 = b.name.toLowerCase();
+       if (compare1 < compare2) {
+         return -1 * x;
+       }
+       if (compare1 > compare2) {
+         return 1 * x;
+       }
+       return 0;
+     });
 
     var playlistHTML = '<select id="select-sorting">';
     playlistHTML += '<option>- Select Sorting -</option>';
@@ -219,30 +210,21 @@ function omdb(f) {
   function omdbPosters(data) {
     var sortingItems = data.Search;
     if(sortingOrder === "asc") {
-      sortingItems.sort(function(a, b) {
-        var compare1 = a.Year.toLowerCase();
-        var compare2 = b.Year.toLowerCase();
-        if (compare1 < compare2) {
-          return -1;
-        }
-        if (compare1 > compare2) {
-          return 1;
-        }
-        return 0;
-      });
+     var x = 1;
     } else {
-      sortingItems.sort(function(a, b) {
-        var compare1 = a.Year.toLowerCase();
-        var compare2 = b.Year.toLowerCase();
-        if (compare1 < compare2) {
-          return 1;
-        }
-        if (compare1 > compare2) {
-          return -1;
-        }
-        return 0;
-      });
+      var x = -1;
     }
+    sortingItems.sort(function(a, b) {
+       var compare1 = a.Year.toLowerCase();
+       var compare2 = b.Year.toLowerCase();
+       if (compare1 < compare2) {
+         return -1 * x;
+       }
+       if (compare1 > compare2) {
+         return 1 * x;
+       }
+       return 0;
+     });
 
     var posterHTML = '<select id="select-sorting">';
     posterHTML += '<option>- Select Sorting -</option>';

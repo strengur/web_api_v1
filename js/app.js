@@ -66,7 +66,7 @@ xhr.onreadystatechange = function() {
       // Example 2 for project's hand in notes
       var moviePoster;
       $('.lightbox').html(xhr.responseText);
-      if(itemImage !== "N/A") {
+      if(itemImage !== "N/A" || xhr.status !== 403) {
         moviePoster = '<img src="' + itemImage + '" alt="' + itemName + '">';
       } else {
         moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
@@ -88,13 +88,13 @@ xhr.onreadystatechange = function() {
         itemIndexNumber --;
         if(itemIndexNumber === -1 ) {
           itemIndexNumber = items.length - 1;
-          if(items[itemIndexNumber].Poster !== "N/A") {
+          if(items[itemIndexNumber].Poster !== "N/A" || xhr.status !== 403 || xhr.status !== 404) {
             moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
           } else {
             moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
           }
         } else {
-          if(items[itemIndexNumber].Poster !== "N/A") {
+          if(items[itemIndexNumber].Poster !== "N/A" || xhr.status !== 403 || xhr.status !== 404) {
             moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
           } else {
             moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
@@ -204,7 +204,8 @@ function omdb(f) {
   var omdbOptions =
   {
     s : "Police Academy",
-    tomatoes : "true"
+    tomatoes : "true",
+    type : "movie"
   };
 
   function omdbPosters(data) {

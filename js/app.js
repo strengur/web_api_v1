@@ -209,6 +209,7 @@ function omdb(f) {
   };
 
   function omdbPosters(data) {
+    $('.show-more').addClass('hidden');
     var sortingItems = data.Search;
     if(sortingOrder === "asc") {
      var x = 1;
@@ -260,7 +261,6 @@ function omdb(f) {
     usrSelection.addEventListener('change', function() {
       var listSorting = usrSelection.selectedOptions[0].value;
       omdb(listSorting);
-      console.log("DDD: ", listSorting);
     });
   }
   $.getJSON(omdbAPI, omdbOptions, omdbPosters);

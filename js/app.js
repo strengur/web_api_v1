@@ -6,126 +6,108 @@ var omdbButton = document.getElementById('omdb-button');
 
 // Spotify Lightbox file called
 function SpotifyLightbox (items, itemIndexNumber, itemImage, itemName) {
-  var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function() {
-  if(xhr.readyState === 4) {
-    if(xhr.status === 200) {
-      // Example 2 for project's hand in notes
-      $('.lightbox').html(xhr.responseText);
-      var playlistCover = '<img src="' + itemImage + '" alt="' + itemName + '">';
-      function playlistInfo() {
-        var playlistInformation = '<table><tbody>';
-        playlistInformation += '<tr><td>Playlist:</td><td>' + items[itemIndexNumber].name + '</td></tr>';
-        playlistInformation += '<tr><td>Tracks:</td><td>' + items[itemIndexNumber].tracks.total + '</td></tr>';
-        playlistInformation += '<tr><td colspan="2" class="open"><a href="' + items[itemIndexNumber].external_urls.spotify + '">Open in Spotify</a></td></tr>';
-        playlistInformation += '</tbody></table>';
-        return playlistInformation;
-      }
-
-      $('#the-image').html(playlistCover);
-      $('#preview-txt').html(playlistInfo());
-
-      $('#preview-prev').click(function() {
-        itemIndexNumber --;
-        if(itemIndexNumber === -1 ) {
-          itemIndexNumber = items.length - 1;
-          playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
-        } else {
-          playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
-        }
-        $('#the-image').html(playlistCover);
-        $('#preview-txt').html(playlistInfo());
-      });
-
-      $('#preview-next').click(function() {
-        itemIndexNumber ++;
-        if(itemIndexNumber === items.length) {
-          itemIndexNumber = 0;
-        }
-        playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
-        $('#the-image').html(playlistCover);
-        $('#preview-txt').html(playlistInfo());
-      });
-
-      $('#close-icon').click(function() {
-        $('.overlay').remove();
-      });
-    }
+  // Example 2 for project's hand in notes
+  $('.lightbox').css('display', 'block');
+  var playlistCover = '<img src="' + itemImage + '" alt="' + itemName + '">';
+  function playlistInfo() {
+    var playlistInformation = '<table><tbody>';
+    playlistInformation += '<tr><td>Playlist:</td><td>' + items[itemIndexNumber].name + '</td></tr>';
+    playlistInformation += '<tr><td>Tracks:</td><td>' + items[itemIndexNumber].tracks.total + '</td></tr>';
+    playlistInformation += '<tr><td colspan="2" class="open"><a href="' + items[itemIndexNumber].external_urls.spotify + '">Open in Spotify</a></td></tr>';
+    playlistInformation += '</tbody></table>';
+    return playlistInformation;
   }
-};
-xhr.open('GET', 'lightbox.html');
-xhr.send();
+
+  $('#the-image').html(playlistCover);
+  $('#preview-txt').html(playlistInfo());
+
+  $('#preview-prev').click(function() {
+    itemIndexNumber --;
+    if(itemIndexNumber === -1 ) {
+      itemIndexNumber = items.length - 1;
+      playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
+    } else {
+      playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
+    }
+    $('#the-image').html(playlistCover);
+    $('#preview-txt').html(playlistInfo());
+  });
+
+  $('#preview-next').click(function() {
+    itemIndexNumber ++;
+    if(itemIndexNumber === items.length) {
+      itemIndexNumber = 0;
+    }
+    playlistCover = '<img src="' + items[itemIndexNumber].images[0].url + '" alt="' + items[itemIndexNumber].name + '">';
+    $('#the-image').html(playlistCover);
+    $('#preview-txt').html(playlistInfo());
+  });
+
+  $('#close-icon').click(function() {
+    $('.lightbox').css('display', 'none');
+  });
 }
 
 // OMDB Lightbox file called
 function omdbLightbox (items, itemIndexNumber, itemImage, itemName) {
-  var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function() {
-  if(xhr.readyState === 4) {
-    if(xhr.status === 200) {
-      // Example 2 for project's hand in notes
-      var moviePoster;
-      $('.lightbox').html(xhr.responseText);
-      if(itemImage !== "N/A" || xhr.status !== 403) {
-        moviePoster = '<img src="' + itemImage + '" alt="' + itemName + '">';
+  // Example 2 for project's hand in notes
+  $('.lightbox').css('display', 'block');
+  var moviePoster;
+  if(itemImage !== "N/A" || xhr.status !== 403) {
+    moviePoster = '<img src="' + itemImage + '" alt="' + itemName + '">';
+  } else {
+    moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
+  }
+  function movieInfo() {
+    var movieInformation = '<table><tbody>';
+    movieInformation += '<tr><td>Movie Name:</td><td>' + items[itemIndexNumber].Title + '</td></tr>';
+    movieInformation += '<tr><td>Year:</td><td>' + items[itemIndexNumber].Year + '</td></tr>';
+    movieInformation += '<tr><td>Type:</td><td>' + items[itemIndexNumber].Type + '</td></tr>';
+    movieInformation += '<tr><td>IMDB ID:</td><td>' + items[itemIndexNumber].imdbID + '</td></tr>';
+    movieInformation += '</tbody></table>';
+    return movieInformation;
+  }
+
+  $('#the-image').html(moviePoster);
+  $('#preview-txt').html(movieInfo());
+
+  $('#preview-prev').click(function() {
+    itemIndexNumber --;
+    if(itemIndexNumber === -1 ) {
+      itemIndexNumber = items.length - 1;
+      if(items[itemIndexNumber].Poster !== "N/A" || xhr.status !== 403 || xhr.status !== 404) {
+        moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
       } else {
         moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
       }
-      function movieInfo() {
-        var movieInformation = '<table><tbody>';
-        movieInformation += '<tr><td>Movie Name:</td><td>' + items[itemIndexNumber].Title + '</td></tr>';
-        movieInformation += '<tr><td>Year:</td><td>' + items[itemIndexNumber].Year + '</td></tr>';
-        movieInformation += '<tr><td>Type:</td><td>' + items[itemIndexNumber].Type + '</td></tr>';
-        movieInformation += '<tr><td>IMDB ID:</td><td>' + items[itemIndexNumber].imdbID + '</td></tr>';
-        movieInformation += '</tbody></table>';
-        return movieInformation;
+    } else {
+      if(items[itemIndexNumber].Poster !== "N/A" || xhr.status !== 403 || xhr.status !== 404) {
+        moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
+      } else {
+        moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
       }
-
-      $('#the-image').html(moviePoster);
-      $('#preview-txt').html(movieInfo());
-
-      $('#preview-prev').click(function() {
-        itemIndexNumber --;
-        if(itemIndexNumber === -1 ) {
-          itemIndexNumber = items.length - 1;
-          if(items[itemIndexNumber].Poster !== "N/A" || xhr.status !== 403 || xhr.status !== 404) {
-            moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
-          } else {
-            moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
-          }
-        } else {
-          if(items[itemIndexNumber].Poster !== "N/A" || xhr.status !== 403 || xhr.status !== 404) {
-            moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
-          } else {
-            moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
-          }
-        }
-        $('#the-image').html(moviePoster);
-        $('#preview-txt').html(movieInfo());
-      });
-
-      $('#preview-next').click(function() {
-        itemIndexNumber ++;
-        if(itemIndexNumber === items.length) {
-          itemIndexNumber = 0;
-        }
-        if(items[itemIndexNumber].Poster !== "N/A") {
-          moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
-        } else {
-          moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
-        }
-        $('#the-image').html(moviePoster);
-        $('#preview-txt').html(movieInfo());
-      });
-
-      $('#close-icon').click(function() {
-        $('.overlay').remove();
-      });
     }
-  }
-};
-xhr.open('GET', 'lightbox.html');
-xhr.send();
+    $('#the-image').html(moviePoster);
+    $('#preview-txt').html(movieInfo());
+  });
+
+  $('#preview-next').click(function() {
+    itemIndexNumber ++;
+    if(itemIndexNumber === items.length) {
+      itemIndexNumber = 0;
+    }
+    if(items[itemIndexNumber].Poster !== "N/A") {
+      moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
+    } else {
+      moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
+    }
+    $('#the-image').html(moviePoster);
+    $('#preview-txt').html(movieInfo());
+  });
+
+  $('#close-icon').click(function() {
+    $('.lightbox').css('display', 'none');
+  });
 }
 
 // Spotify feed
@@ -190,7 +172,6 @@ function spotify(e, f) {
     usrSelection.addEventListener('change', function() {
       var listSorting = usrSelection.selectedOptions[0].value;
       spotify(data.playlists.items.length, listSorting);
-      console.log("DDD: ", listSorting);
     });
   }
   $.getJSON(spotifyAPI, spotifyOptions, displayPlaylists);
@@ -198,7 +179,6 @@ function spotify(e, f) {
 
 // OMDB feed
 function omdb(f) {
-  console.log("ssss: ", f);
   var sortingOrder = f;
   var omdbAPI = "http://www.omdbapi.com/?";
   var omdbOptions =

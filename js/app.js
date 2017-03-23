@@ -53,7 +53,7 @@ function omdbLightbox (items, itemIndexNumber, itemImage, itemName) {
   // Example 2 for project's hand in notes
   $('.lightbox').css('display', 'block');
   var moviePoster;
-  if(itemImage !== "N/A" || xhr.status !== 403) {
+  if(itemImage !== "N/A") {
     moviePoster = '<img src="' + itemImage + '" alt="' + itemName + '">';
   } else {
     moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
@@ -75,13 +75,13 @@ function omdbLightbox (items, itemIndexNumber, itemImage, itemName) {
     itemIndexNumber --;
     if(itemIndexNumber === -1 ) {
       itemIndexNumber = items.length - 1;
-      if(items[itemIndexNumber].Poster !== "N/A" || xhr.status !== 403 || xhr.status !== 404) {
+      if(items[itemIndexNumber].Poster !== "N/A") {
         moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
       } else {
         moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
       }
     } else {
-      if(items[itemIndexNumber].Poster !== "N/A" || xhr.status !== 403 || xhr.status !== 404) {
+      if(items[itemIndexNumber].Poster !== "N/A") {
         moviePoster = '<img src="' + items[itemIndexNumber].Poster + '" alt="' + items[itemIndexNumber].Title + '">';
       } else {
         moviePoster = '<img src="assets/images/no-poster.jpg" alt="">';
